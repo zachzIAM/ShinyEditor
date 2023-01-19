@@ -24,7 +24,7 @@ library(ShinyEditor)
 ui <- fluidPage(
 
   # Setup
-  use_editor("API-KEY"),
+  use_editor(),
   titlePanel("HTML Generator"),
 
   # Text Input 1

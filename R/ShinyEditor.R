@@ -18,7 +18,7 @@
 #' ui <- fluidPage(
 #'
 #'   # Setup
-#'   use_editor("API-KEY"),
+#'   use_editor(),
 #'   titlePanel("HTML Generator"),
 #'
 #'   # Text Input 1
@@ -88,7 +88,7 @@ editor <- function(id, text = NULL, options = NULL) {
 #' ui <- fluidPage(
 #'
 #'   # Setup
-#'   use_editor("API-KEY"),
+#'   use_editor(),
 #'   titlePanel("HTML Generator"),
 #'
 #'   # Text Input 1
@@ -143,12 +143,7 @@ editor <- function(id, text = NULL, options = NULL) {
 UpdateEditor <- function(session,
                          id = "textcontent",
                          text = "Sample Text") {
-
-  session$sendCustomMessage(type = "UpdateshinyEditor",
-                            list(id = id,
-                                 content = text
-                            ))
-
+  session$sendCustomMessage(type = "UpdateshinyEditor", list(id = id, content = text))
 }
 
 #' Extract HTML generated
@@ -171,7 +166,7 @@ UpdateEditor <- function(session,
 #' ui <- fluidPage(
 #'
 #'   # Setup
-#'   use_editor("API-KEY"),
+#'   use_editor(),
 #'   titlePanel("HTML Generator"),
 #'
 #'   # Text Input 1
@@ -216,6 +211,11 @@ UpdateEditor <- function(session,
 #' shinyApp(ui = ui, server = server)
 
 editorText <- function (session, editorid, outputid) {
-  session$sendCustomMessage(type = "HTMLText", list(jscode = paste0("Shiny.setInputValue(", "'", outputid, "', tinyMCE.get(", "'", editorid, "'", 
-                                                                    ").getContent(), {priority: 'event'});")))
+  session$sendCustomMessage(type = "HTMLText", list(
+    jscode = sprintf(
+      "Shiny.setInputValue('%s', tinyMCE.get('%s').getContent(), {priority: 'event'});",
+      outputid,
+      editorid
+    )
+  ))
 }

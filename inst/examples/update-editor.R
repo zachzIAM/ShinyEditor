@@ -5,7 +5,7 @@
  ui <- fluidPage(
 
    # Setup
-   use_editor("API-Key"),
+   use_editor(),
    titlePanel("HTML Generator"),
 
    # Text Input 1
